@@ -6,17 +6,29 @@ import iqoptionapi.global_value as global_value
 from iqoptionapi.expiration import get_expiration_time
 
 
+
+    # l = account.get_server_timestamp() 
+    # if l%60 > 30:
+    #     z = l - l%60 +60
+    # else:
+    #     z = l - l%60
+    # expiredtime = z + (60*tiempoC)
+
 class Buyv3(Base):
 
     name = "sendMessage"
 
     def __call__(self, price, active, direction, duration, request_id):
 
-        # thank Darth-Carrotpie's code
-        # https://github.com/Lu-Yi-Hsun/iqoptionapi/issues/6
-        exp, idx = get_expiration_time(
-            int(self.api.timesync.server_timestamp), duration)
-        if idx < 5:
+    
+
+        tserver = int(self.api.timesync.server_timestamp)
+        if tserver%60 > 30:
+            exp = tserver - tserver%60 +60*(1+duration)
+        else:
+            exp = tserver - tserver%60 + (60*duration)
+
+        if duration <= 5:
             option = 3  # "turbo"
         else:
             option = 1  # "binary"

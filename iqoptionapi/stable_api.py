@@ -13,7 +13,11 @@ from iqoptionapi.expiration import get_expiration_time, get_remaning_time
 from datetime import datetime, timedelta
 from random import randint
 
+##############################################
 
+    
+
+##########################################
 def nested_dict(n, type):
     if n == 1:
         return defaultdict(type)
@@ -42,6 +46,10 @@ class IQ_Option:
         self.SESSION_HEADER = {
             "User-Agent": r"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"}
         self.SESSION_COOKIE = {}
+        self.api = IQOptionAPI("iqoption.com", self.email, self.password)
+        self.api.set_session(headers=self.SESSION_HEADER,
+                                    cookies=self.SESSION_COOKIE)
+        check, reason = self.api.connect()
         #
         # --start
         # self.connect()
