@@ -7,3 +7,4 @@ dist/
 venv/
 .idea
 test.py
+.DS_Store
